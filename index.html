@@ -8,9 +8,28 @@
 </head>
 <body>
     <model-viewer id="ar-model" src="model.glb" alt="3D Model" ar ar-modes="scene-viewer webxr quick-look" 
-                  environment-image="neutral" auto-rotate camera-controls touch-action="none" disable-zoom></model-viewer>
+                  environment-image="neutral" disable-zoom></model-viewer>
 
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modelViewer = document.getElementById('ar-model');
+            
+            // Function to enter AR mode automatically
+            function enterAR() {
+                if (modelViewer) {
+                    modelViewer.enterAR(); // This function should trigger AR mode if supported
+                }
+            }
+
+            // Wait for the model-viewer to be ready
+            modelViewer.addEventListener('load', () => {
+                // Check if AR is available and then trigger it
+                if (modelViewer.canEnterAR) {
+                    enterAR();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
